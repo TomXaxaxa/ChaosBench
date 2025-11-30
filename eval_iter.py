@@ -139,13 +139,10 @@ def main(args):
         model_args = hyperparams['model_args']
         data_args = hyperparams['data_args']
         
-        ## Initialize model given hyperparameters
-        baseline = model.S2SBenchmarkModel(model_args=model_args, data_args=data_args)
-        
         ## Load model from checkpoint
         ckpt_filepath = log_dir / f'lightning_logs/version_{args.version_num}/checkpoints/'
         ckpt_filepath = list(ckpt_filepath.glob('*.ckpt'))[0]
-        baseline = baseline.load_from_checkpoint(ckpt_filepath)
+        baseline = model.S2SBenchmarkModel.load_from_checkpoint(ckpt_filepath, model_args=model_args, data_args=data_args)
         baseline.eval()
         
         lra5_vars = baseline.hparams.get('data_args', {}).get('land_vars', [])

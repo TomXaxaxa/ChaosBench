@@ -11,6 +11,7 @@ pl.seed_everything(42)
 
 from chaosbench.models import model
 
+torch.set_float32_matmul_precision('high')
 
 def main(args):
     """
